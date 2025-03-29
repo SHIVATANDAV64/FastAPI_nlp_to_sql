@@ -25,25 +25,23 @@ def mock_db():
             order_id TEXT UNIQUE,
             category TEXT,
             status TEXT,
-            price REAL,
-            order_date TEXT
         )
     ''')
     mock_data = [
-        ("ODID001","T-Shirts", "Shipped", 1599, "2025-03-28 14:30"),
-        ("ODID002","T-Shirts", "Pending", 2099, "2025-03-29 10:15"),
-        ("ODID003","T-Shirts", "Delivered", 1299, "2025-03-27 18:45"),
-        ("ODID004","Shoes", "Cancelled", 3999, "2025-03-26 08:00"),
-        ("ODID005","Shoes", "Shipped", 6999, "2025-03-28 20:30"),
-        ("ODID006","Shoes", "Delivered", 3099, "2025-03-25 16:20"),
-        ("ODID007","Hats", "Pending", 899, "2025-03-29 09:50"),
-        ("ODID008","Hats", "Shipped", 1149, "2025-03-28 22:10"),
-        ("ODID009","Hats", "Cancelled", 1499, "2025-03-27 11:05"),
+        ("ODID001","T-Shirts", "Shipped"),
+        ("ODID002","T-Shirts", "Pending"),
+        ("ODID003","T-Shirts", "Delivered"),
+        ("ODID004","Shoes", "Cancelled"),
+        ("ODID005","Shoes", "Shipped"),
+        ("ODID006","Shoes", "Delivered"),
+        ("ODID007","Hats", "Pending"),
+        ("ODID008","Hats", "Shipped"),
+        ("ODID009","Hats", "Cancelled"),
     ]
     for index, (order_id,category, status, price, order_date) in enumerate(mock_data, start=1):
         cursor.execute(
-            "INSERT INTO sales_table (order_id, category, status, price, order_date) VALUES (?, ?, ?, ?, ?)",
-            (order_id, category, status, price, order_date)
+            "INSERT INTO sales_table (order_id, category, status) VALUES (?, ?, ?)",
+            (order_id, category, status)
         )
     con.commit()
     con.close()
