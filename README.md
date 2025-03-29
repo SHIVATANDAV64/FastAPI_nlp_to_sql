@@ -7,15 +7,39 @@ This mock-project provides a lightweight REST API that simulates an AI-powered n
 ## API Flowchart (Mermaid.js)
 
 ```mermaid
-graph TD;
-  A[User Sends Query] -->|Natural Query| B[FastAPI Server]
-  B -->|Validate API Key| C{API Key Valid?}
-  C -->|No| D[403 Forbidden]
-  C -->|Yes| E[Query Parsing]
-  E -->|Match Found| F[Generate SQL Query]
-  E -->|No Match| G[Return Unsupported Query]
-  F -->|Execute SQL| H[Fetch Results from Mock DB]
-  H -->|Return Data| I[Send JSON Response]
+graph TD
+    A[Start: FastAPI Application] --> B{API Key Validation};
+    B -- Valid API Key --> C{Endpoint Selection};
+    B -- Invalid API Key --> D[Error: Invalid API Key];
+    C -- / (root) --> E[Return: 'FastAPI NLP to SQL service is running!'];
+    C -- /query --> F[Get Natural Language Query];
+    C -- /explain --> G[Get Natural Language Query];
+    C -- /validate --> H[Get Natural Language Query];
+    F --> I[Generate SQL Query - gen_sql];
+    G --> J[Generate SQL Query - gen_sql];
+    H --> K[Generate SQL Query - gen_sql];
+    I --> L{SQL Query Generated?};
+    J --> M{SQL Query Generated?};
+    K --> N{SQL Query Generated?};
+    L -- Yes --> O[Connect to SQLite DB];
+    M -- Yes --> P[Return: Natural Query, SQL Query];
+    N -- Yes --> Q[Return: Valid True, SQL Query];
+    L -- No --> R[Error: Unsupported Query];
+    M -- No --> R;
+    N -- No --> S[Return: Valid False, Error Message];
+    O --> T[Execute SQL Query];
+    T --> U[Fetch Results];
+    U --> V[Return: Natural Query, SQL Query, Results];
+    D --> W[End];
+    E --> W;
+    P --> W;
+    Q --> W;
+    R --> W;
+    S --> W;
+    V --> W;
+    A --> X[Create SQLite DB and Mock Data - mock_db on Startup];
+    X --> A;
+
 ```
 
 ## Features
