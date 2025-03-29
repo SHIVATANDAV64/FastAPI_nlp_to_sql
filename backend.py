@@ -74,7 +74,10 @@ def gen_sql(natural_query:str):
                 return f"SELECT COUNT(*) FROM sales_table WHERE status = '{keyword}';"
     
     return query_map.get(natural_query, None)
-
+    
+@app.get("/")
+def root():
+    return {"message": "FastAPI NLP to SQL service is running!"}
 
 @app.get('/query')
 def get_data(natural_query:str, api_key:str = Depends(verify_api_key)):
